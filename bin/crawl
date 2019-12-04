@@ -21,6 +21,7 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), o
 driver.get(f"https://www.decolar.com/shop/flights/search/oneway/RIO/SAO/{formattedDate}/1/0/0/NA/NA/NA/NA/?from=SB&di=1-0")
 
 # Access requests via the `requests` attribute
+print([request.path for request in driver.requests])
 matchingRequest = [ request for request in driver.requests if
                     request.path.startswith('https://www.decolar.com/shop/flights-busquets/api/v1/web/search') ][0]
 dataClusters = json.loads(matchingRequest.response.body)['clusters']

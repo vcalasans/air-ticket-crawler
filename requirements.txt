@@ -1,5 +1,10 @@
+re
 django
 gunicorn
 django-heroku
 requests
 pandas
+selenium
+selenium-wire
+psycopg2-binary
+dj-database-url

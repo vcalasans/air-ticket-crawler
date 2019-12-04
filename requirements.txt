@@ -1,8 +1,6 @@
-re
 django
 gunicorn
 django-heroku
-requests
 pandas
 selenium
 selenium-wire

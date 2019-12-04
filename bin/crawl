@@ -6,7 +6,8 @@ import pandas as pd
 from seleniumwire import webdriver
 
 
-date = pd.datetime.today() + pd.offsets.Week()
+currentDate = pd.datetime.today()
+date = currentDate + pd.offsets.Week()
 formattedDate = date.strftime('%Y-%m-%d')
 
 chrome_options = webdriver.ChromeOptions()
@@ -25,14 +26,16 @@ matchingRequest = [ request for request in driver.requests if
 dataClusters = json.loads(matchingRequest.response.body)['clusters']
 bestCluster = list(filter(lambda x: x['bestCluster'] is True, dataClusters))[0]
 bestPrice = bestCluster['priceDetail']['totalFare']['amount']
-# print(f"The best price is: R$ {bestPrice}")
+print(f"The best price is: R$ {bestPrice}")
 
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 cur.execute(
-    f"""insert into prices (date, departure, arrival, price)
-    values ('{pd.to_datetime(date)}', 'RIO', 'SAO', {bestPrice});"""
+    f"""insert into prices (date, flightdate, departure, arrival, price)
+    values ('{pd.to_datetime(currentDate).date()}', '{pd.to_datetime(date).date()}', 'RIO', 'SAO', {bestPrice});"""
 )
 cur.execute("select * from prices;")
+conn.commit()
 print(cur.fetchall())
+cur.close()

@@ -7,4 +7,4 @@ pandas
 selenium
 selenium-wire
 psycopg2-binary
-dj-database-url
+openpyxl

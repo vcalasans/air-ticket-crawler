@@ -2,7 +2,5 @@ django
 gunicorn
 django-heroku
 pandas
-selenium
-selenium-wire
 psycopg2-binary
 openpyxl

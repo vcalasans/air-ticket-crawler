@@ -33,7 +33,7 @@ conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 cur.execute(
     f"""insert into prices (date, flightdate, departure, arrival, price)
-    values ('{pd.to_datetime(currentDate).date()}', '{pd.to_datetime(date).date()}', 'RIO', 'SAO', {bestPrice});"""
+    values ('{pd.to_datetime(currentDate)}', '{pd.to_datetime(date).date()}', 'RIO', 'SAO', {bestPrice});"""
 )
 cur.execute("select * from prices;")
 conn.commit()

@@ -22,6 +22,8 @@ driver.get(f"https://www.decolar.com/shop/flights/search/oneway/RIO/SAO/{formatt
 # Access requests via the `requests` attribute
 matchingRequest = [ request for request in driver.requests if
                     request.path.startswith('https://www.decolar.com/shop/flights-busquets/api/v1/web/search') ][0]
+driver.wait_for_request(matchingRequest.path, timeout=60)
+print(f'Request to {matchingRequest.path} returned with status code {matchingRequest.response.status_code}.')
 dataClusters = json.loads(matchingRequest.response.body)['clusters']
 bestCluster = list(filter(lambda x: x['bestCluster'] is True, dataClusters))[0]
 bestPrice = bestCluster['priceDetail']['totalFare']['amount']
